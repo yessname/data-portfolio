@@ -7,15 +7,16 @@ from sqlalchemy import create_engine
 def extract():
     df = pd.read_csv('data/raw/AB_NYC_2019.csv')
 
-    os.makedirs("data/clean", exist_ok=True)
-    df.to_csv("data/raw/AB_NYC_2019_extracted.csv", index=False)
+    os.makedirs("data/staging", exist_ok=True)
+    df.to_csv("data/staging/AB_NYC_2019_extracted.csv", index=False)
+
     print("Extraction completed")
 
     return df
 
 #Transform
 def transform():
-    df = pd.read_csv('data/raw/AB_NYC_2019_extracted.csv')
+    df = pd.read_csv('data/staging/AB_NYC_2019_extracted.csv')
     cols = [
         "id",
         "host_id",
@@ -55,8 +56,8 @@ def transform():
 
     df = df[df["price"] > 0]
 
-    
-    df.to_parquet("data/raw/AB_NYC_2019.parquet")
+    os.makedirs("data/clean", exist_ok=True)
+    df.to_parquet("data/clean/AB_NYC_2019.parquet")
 
     print("Transformation completed")
 
@@ -64,7 +65,7 @@ def transform():
 
 #Loading
 def load():
-    df = pd.read_parquet("data/raw/AB_NYC_2019.parquet")
+    df = pd.read_parquet("data/clean/AB_NYC_2019.parquet")
 
     DB_USER = "airflow"
     DB_PASSWORD = "airflow"
