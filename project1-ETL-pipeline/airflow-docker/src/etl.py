@@ -1,7 +1,28 @@
 import pandas as pd
 import os
 from sqlalchemy import create_engine
+from sqlalchemy.engine import Engine
 
+DATA_DIR = "data"
+RAW_FILE_PATH = os.path.join(DATA_DIR, "raw", "AB_NYC_2019.csv")
+STAGING_DIR = os.path.join(DATA_DIR, "staging")
+STAGING_FILE_PATH = os.path.join(STAGING_DIR, "AB_NYC_2019_extracted.csv")
+CLEAN_DIR = os.path.join(DATA_DIR, "clean")
+CLEAN_FILE_PATH = os.path.join(CLEAN_DIR, "AB_NYC_2019.parquet")
+
+DB_USER = "airflow"
+DB_PASSWORD = "airflow"
+DB_PORT = "5432"
+DB_NAME = "airflow"
+DB_HOST = "postgres"
+
+DB_CONN_STR = (
+    f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+)
+
+
+def get_engine(conn_str: str = DB_CONN_STR) -> Engine:
+    return create_engine(conn_str)
 
 #Extract
 def extract():
@@ -56,8 +77,8 @@ def transform():
 
     df = df[df["price"] > 0]
 
-    os.makedirs("data/clean", exist_ok=True)
-    df.to_parquet("data/clean/AB_NYC_2019.parquet")
+    os.makedirs("data/staging", exist_ok=True)
+    df.to_parquet("data/staging/AB_NYC_2019_transformed.parquet")
 
     print("Transformation completed")
 
@@ -65,17 +86,9 @@ def transform():
 
 #Loading
 def load():
-    df = pd.read_parquet("data/clean/AB_NYC_2019.parquet")
+    df = pd.read_parquet("data/staging/AB_NYC_2019_transformed.parquet")
 
-    DB_USER = "airflow"
-    DB_PASSWORD = "airflow"
-    DB_PORT = "5432"
-    DB_NAME = "airflow"
-    DB_HOST = "postgres"
-
-    url = f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
-    engine = create_engine(url)
-
+    engine = get_engine()
     
     df.to_sql(
         name="listings",

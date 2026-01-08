@@ -14,6 +14,7 @@ Project Goals
 - Clean and transform raw Airbnb data using Python
 - Load processed data into PostgreSQL
 - Perform basic analysis and visualization in a Jupyter Notebook
+- Build analytical reports and dashboards using Power BI
 
 ---
 
@@ -24,6 +25,7 @@ Tech Stack
 - PostgreSQL
 - Docker
 - Jupyter Notebook
+- Power BI
 
 ---
 
