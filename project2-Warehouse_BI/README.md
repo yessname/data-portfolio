@@ -28,6 +28,7 @@ Tech Stack
 
 - Python, pandas, SQLAlchemy
 - PostgreSQL
+- Power BI
 
 ---
 

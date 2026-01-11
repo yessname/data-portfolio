@@ -25,7 +25,6 @@ Tech Stack
 - PostgreSQL
 - Docker
 - Jupyter Notebook
-- Power BI
 
 ---
 
@@ -50,8 +49,26 @@ project/
 
 How to run
 
-To run the pipeline, first start the Docker containers by running “docker compose up” in the project root. This launches PostgreSQL, the Airflow webserver, and the Airflow scheduler. Once the services are running, open Airflow in your browser at http://localhost:8080 (username “airflow” and password “airflow”).
+1. Start the Docker services:
 
-In the Airflow UI, find the DAG named “airbnb_etl”. Enable it using the toggle on the left, then trigger it manually. The pipeline will execute the full ETL flow: extract, transform and load. After all tasks turn green, the data has been successfully processed.
+docker compose up -d
 
-Airflow connects to the database using the internal Docker hostname “postgres”. If you want to access the database from your local machine, connect through localhost on the port exposed in docker-compose.
+2. Open Airflow UI
+
+Open Airflow in your browser:
+http://localhost:8080 (username: airflow, password: airflow)
+
+3. Run the pipeline (Airflow DAG)
+
+In the Airflow UI:
+
+- Find the DAG named airbnb_etl
+- Enable it using the toggle on the left
+- Trigger it manually ("Trigger DAG")
+
+Airflow will execute the full ETL flow: extract → transform → load.
+When all tasks turn green, the pipeline finished successfully and the data has been loaded.
+
+4. Database access notes
+
+Inside Docker, Airflow connects to PostgreSQL using the internal hostname (postgres)
