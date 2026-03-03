@@ -1,74 +1,104 @@
-Airbnb NYC ETL Pipeline
+# 🏠 Airbnb NYC ETL Pipeline
 
-This project is a ETL pipeline built with Apache Airflow, PostgreSQL and Docker.  
-It demonstrates how to orchestrate data extraction, transformation, loading and how to perform data analysis on the processed dataset.
+ETL pipeline built with **Apache Airflow**, **PostgreSQL**, and **Docker**.  
+The project demonstrates orchestration of data extraction, transformation, and loading (ETL) using a publicly available dataset.
 
-The pipeline works with the publicly available Airbnb NYC dataset.
-https://www.kaggle.com/datasets/dgomonov/new-york-city-airbnb-open-data
-
----
-
-Project Goals
-
-- Automate data ingestion using Airflow
-- Clean and transform raw Airbnb data using Python
-- Load processed data into PostgreSQL
-- Perform basic analysis and visualization in a Jupyter Notebook
-- Build analytical reports and dashboards using Power BI
+Dataset used: NYC Airbnb Open Data (Kaggle)
 
 ---
 
-Tech Stack
+## 📌 Project Overview
 
-- Python, pandas, SQLAlchemy, matplotlib
-- Apache Airflow
-- PostgreSQL
-- Docker
-- Jupyter Notebook
+This project automates the full ETL workflow:
 
----
-
-Project Structure
-
-project/
-├─ dags/
-│ └─ etl_dag.py
-├─ data/
-│ ├─ raw/
-│ └─ clean/
-├─ notebooks/
-│ └─ airbnb_analysis.ipynb
-├─ sql/
-│ └─ create_table.sql
-├─ src/
-│ └─ etl.py
-├─ docker-compose.yaml
-└─ README.md
+- Extract raw Airbnb data  
+- Transform and clean the dataset using Python  
+- Load processed data into PostgreSQL  
+- Perform data analysis in Jupyter Notebook  
 
 ---
 
-How to run
+## 🎯 Project Goals
 
-1. Start the Docker services:
+- Automate data ingestion using Apache Airflow  
+- Clean and transform raw Airbnb data using Python  
+- Load processed data into PostgreSQL  
+- Perform exploratory data analysis  
+
+---
+
+## 🛠 Tech Stack
+
+- Python  
+- pandas  
+- SQLAlchemy  
+- matplotlib  
+- Apache Airflow  
+- PostgreSQL  
+- Docker  
+- Jupyter Notebook  
+
+---
+
+## 🚀 How to Run
+
+### 1. Start Docker services
+
 
 docker compose up -d
 
-2. Open Airflow UI
 
-Open Airflow in your browser:
-http://localhost:8080 (username: airflow, password: airflow)
+### 2. Open Airflow UI
 
-3. Run the pipeline (Airflow DAG)
+Open in your browser:
+
+
+http://localhost:8080
+
+
+Credentials:  
+- Username: airflow  
+- Password: airflow  
+
+### 3. Run the ETL Pipeline
 
 In the Airflow UI:
 
-- Find the DAG named airbnb_etl
-- Enable it using the toggle on the left
-- Trigger it manually ("Trigger DAG")
+1. Find the DAG named `airbnb_etl`
+2. Enable it using the toggle
+3. Click **Trigger DAG**
 
-Airflow will execute the full ETL flow: extract → transform → load.
-When all tasks turn green, the pipeline finished successfully and the data has been loaded.
+Airflow will execute the full ETL flow:
 
-4. Database access notes
 
-Inside Docker, Airflow connects to PostgreSQL using the internal hostname (postgres)
+extract → transform → load
+
+
+When all tasks turn green, the pipeline finished successfully and the data has been loaded into PostgreSQL.
+
+---
+
+## 🗄 Database Notes
+
+Inside Docker, Airflow connects to PostgreSQL using the internal hostname:
+
+
+postgres
+
+
+---
+
+## 📊 Analysis
+
+Data analysis and visualizations are available in:
+
+
+notebooks/airbnb_analysis.ipynb
+
+
+---
+
+## 📎 Dataset
+
+NYC Airbnb Open Data:  
+https://www.kaggle.com/datasets/dgomonov/new-york-city-airbnb-open-data
