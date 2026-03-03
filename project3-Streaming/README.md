@@ -1,59 +1,74 @@
-Weather Streaming Pipeline (Kafka)
+# 🌦 Weather Streaming Pipeline (Kafka)
 
-This project is a simple real-time data streaming pipeline built with Python and Apache Kafka. It demonstrates how weather data can be ingested from an external API, published as events to a Kafka topic, and consumed in real time for further processing.
+A simple real-time data streaming pipeline built with **Python** and **Apache Kafka**.
 
----
-
-Project Goals
-
-- Ingest real-time weather data from a public API
-- Publish weather events to Apache Kafka
-- Consume streaming data in real time
-- Persist raw events in an append-only format
+The project demonstrates how weather data can be ingested from an external API, published as events to a Kafka topic, and consumed in real time for further processing.
 
 ---
 
-Data Source
+## 📌 Project Overview
 
-The project uses the Open-Meteo API (free public weather API).
+This project demonstrates:
 
-API documentation:
+- Real-time ingestion of weather data from a public API  
+- Publishing events to Apache Kafka  
+- Consuming streaming data in real time  
+- Persisting raw events in append-only format  
+
+---
+
+## 🎯 Project Goals
+
+- Ingest real-time weather data from a public API  
+- Publish weather events to Apache Kafka  
+- Consume streaming data in real time  
+- Persist raw events in JSON Lines format  
+
+---
+
+## 🌍 Data Source
+
+The project uses the **Open-Meteo API** (free public weather API).
+
+API documentation:  
 https://open-meteo.com/
 
 ---
 
-Tech Stack
+## 🛠 Tech Stack
 
-- Python
-- Apache Kafka
-- Docker
-- Open-Meteo API
+- Python  
+- Apache Kafka  
+- Docker  
+- Open-Meteo API  
 
 ---
 
-Streaming Architecture
+## 🏗 Streaming Architecture
 
 The pipeline consists of two main components:
 
-1. Producer
+### Producer
 
-- Periodically requests current weather data from the API
-- Converts API responses into structured JSON events
-- Publishes events to a Kafka topic
+- Periodically requests current weather data from the API  
+- Converts API responses into structured JSON events  
+- Publishes events to a Kafka topic  
 
-2. Consumer
+### Consumer
 
-- Subscribes to the Kafka topic
-- Reads events in real time
-- Writes raw events to a local file in JSON Lines format
+- Subscribes to the Kafka topic  
+- Reads events in real time  
+- Writes raw events to a local file in JSON Lines (`.jsonl`) format  
 
 ---
 
-Event Format
+## 📦 Event Format
 
-Each Kafka message represents a single weather observation, 
+Each Kafka message represents a single weather observation.
+
 Example:
 
+```json
 {
   "ts_utc": "2026-01-08T20:15:00Z",
   "city": "Warsaw",
@@ -61,39 +76,33 @@ Example:
   "wind_kph": 13.3,
   "source": "open-meteo"
 }
-
-Consumed events are stored in JSON Lines (.jsonl) format:
-
----
-
-Project Structure
-
-project/
-├─ weather-streaming/
-│ └─ src/
-│ │ └─ data
-│ │ │ └─ raw_events.jsonl
-│ │ ├─ consumer.py
-│ │ └─ producer.py
-│ └─ docker-compose.yaml
-└─ README.md
+```
 
 ---
 
-How to Run
-1. Start Kafka using Docker:
-docker compose up -d
+## 🚀 How to Run
 
-2. Create Kafka Topic:
-docker exec -it kafka bash -lc "/opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka:9092 --create --topic weather --partitions 1 --replication-factor 1"
+### 1. Ensure PostgreSQL is running
 
-3. Run Consumer
+Create a database named:
 
-In one terminal:
-python src/consumer.py
 
-4. Run Producer
+superstore
 
-In another terminal:
-python src/producer.py
 
+---
+
+### 2. Run the ETL pipeline
+
+
+python superstore_etl.py
+
+
+---
+
+### 3. Verify data
+
+After successful execution, the cleaned data will be available in PostgreSQL under:
+
+
+staging.raw_orders
