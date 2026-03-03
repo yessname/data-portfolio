@@ -9,11 +9,11 @@ RAW_FILE_PATH = os.path.join(DATA_DIR, "raw", "Superstore.csv")
 STAGING_SCHEMA = "staging"
 STAGING_TABLE = "raw_orders"
 
-DB_USER = "postgres"
-DB_PASSWORD = "Artsem"
-DB_PORT = "5432"
-DB_NAME = "superstore"
-DB_HOST = "localhost"
+DB_USER = os.getenv("DB_USER")
+DB_PASSWORD = os.getenv("DB_PASSWORD")
+DB_PORT = os.getenv("DB_PORT", "5432")
+DB_NAME = os.getenv("DB_NAME")
+DB_HOST = os.getenv("DB_HOST", "localhost")
 
 DB_CONN_STR = (
     f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
